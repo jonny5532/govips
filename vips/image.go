@@ -1349,7 +1349,7 @@ func (r *ImageRef) TransformICCProfile(outputProfilePath string) error {
 	return nil
 }
 
-func (r *ImageRef) TransformICCProfileWithInputAndOutputProfiles(inputProfilePath string, outputProfilePath string) eror {
+func (r *ImageRef) TransformICCProfileWithInputAndOutputProfiles(inputProfilePath string, outputProfilePath string) error {
 	depth := 16
 	if r.BandFormat() == BandFormatUchar || r.BandFormat() == BandFormatChar || r.BandFormat() == BandFormatNotSet {
 		depth = 8
