@@ -1349,6 +1349,22 @@ func (r *ImageRef) TransformICCProfile(outputProfilePath string) error {
 	return nil
 }
 
+func (r *ImageRef) TransformICCProfileWithInputAndOutputProfiles(inputProfilePath string, outputProfilePath string) eror {
+	depth := 16
+	if r.BandFormat() == BandFormatUchar || r.BandFormat() == BandFormatChar || r.BandFormat() == BandFormatNotSet {
+		depth = 8
+	}
+
+	out, err := vipsICCTransform(r.image, outputProfilePath, inputProfilePath, IntentPerceptual, depth, false)
+	if err != nil {
+		govipsLog("govips", LogLevelError, fmt.Sprintf("failed to do icc transform: %v", err.Error()))
+		return err
+	}
+
+	r.setImage(out)
+	return nil
+}
+
 // OptimizeICCProfile optimizes the ICC color profile of the image.
 // For two color channel images, it sets a grayscale profile.
 // For color images, it sets a CMYK or non-CMYK profile based on the image metadata.
